@@ -675,7 +675,7 @@ Return ONLY valid JSON:
 {"fillInBlank":[{"sentence":"She ___ to school.","answer":"walks","hint":"move on foot","options":["walks","runs","swims","flies"]}],"oxQuiz":[{"word":"apple","emoji":"🍎","question":"An apple is a fruit. ⭕ or ✕?","answer":true,"explanation":"Yes!"}],"speakingCards":[{"word":"apple","sentence":"I eat an apple.","tip":"AP-ple","emoji":"🍎","funFact":"Apples are red or green!"}],"roleplay":{"title":"At the Market","characters":["Student A","Student B"],"lines":[{"character":"Student A","line":"Hello!","targetWord":"apple"}]}}
 Rules: fillInBlank min 3, oxQuiz min ${isYoung?6:4} mix true/false, speakingCards min 3, roleplay min 6 lines.`;
     try{
-      const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:2500,messages:[{role:"user",content:prompt}]})});
+      const res=await fetch("/api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:2500,messages:[{role:"user",content:prompt}]})});
       const data=await res.json();const text=data.content?.map(b=>b.text||"").join("")||"";
       setGenerated(JSON.parse(text.replace(/```json|```/g,"").trim()));setMainTab(0);
     }catch(e){setError("생성 중 오류가 발생했습니다.");}
