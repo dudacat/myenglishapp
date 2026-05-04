@@ -64,7 +64,7 @@ Use EXTREMELY simple words. Very short sentences (max 5 words). Start very vague
 Example: "It is a food.", "It is sweet.", "It is red.", "You eat it.", "It grows on trees.", "It is an apple."
 Return ONLY a JSON array of 6 strings, no markdown: ["clue1","clue2","clue3","clue4","clue5","clue6"]`;
     try{
-      const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:400,messages:[{role:"user",content:prompt}]})});
+      const res=await fetch("/api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:400,messages:[{role:"user",content:prompt}]})});
       const data=await res.json();
       const text=data.content?.map(b=>b.text||"").join("")||"[]";
       const parsed=JSON.parse(text.replace(/```json|```/g,"").trim());
